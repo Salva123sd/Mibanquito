@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Reporte mensual</title>
+
+    <style>
+        /* -------- Configuración de página A4 -------- */
+        @page {
+            size: A4;
+            margin: 20mm 18mm;
+        }
+
+        /* -------- Tipografía y generales -------- */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", sans-serif;
+            font-size: 11px;
+            color: #222222;
+            background-color: #ffffff;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 0 0 4px 0;
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: #777777;
+            margin: 0 0 18px 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 18px 0 8px 0;
+        }
+
+        .muted {
+            color: #777777;
+        }
+
+        /* -------- Contenedor principal -------- */
+        .page {
+            width: 100%;
+        }
+
+        /* -------- Resumen (cards superiores) -------- */
+        .summary-grid {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 10px;
+            margin-bottom: 10px;
+        }
+
+        .summary-card {
+            border: 0.5pt solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            background: #fafafa;
+        }
+
+        .summary-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888888;
+            margin-bottom: 4px;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .summary-help {
+            font-size: 9px;
+            color: #777777;
+        }
+
+        /* -------- Tabla de detalle -------- */
+        table.report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+            font-size: 10px;
+        }
+
+        table.report-table thead th {
+            background: #f3f3fa;
+            border-bottom: 0.6pt solid #d4d4e0;
+            padding: 6px 5px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table.report-table tbody td {
+            border-bottom: 0.4pt solid #e5e5e5;
+            padding: 5px 5px;
+            vertical-align: top;
+        }
+
+        table.report-table tbody tr:nth-child(odd) {
+            background: #ffffff;
+        }
+
+        table.report-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        /* -------- Estado badge -------- */
+        .estado-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 999px;
+            border: 0.4pt solid #bbbbbb;
+            font-size: 9px;
+            white-space: nowrap;
+        }
+
+        /* mismo estilo para todos; si quieres, luego diferenciamos por color */
+        /* .estado-activo { border-color:#4caf50; } etc */
+
+        /* -------- Footer pequeño -------- */
+        .footer {
+            margin-top: 14px;
+            font-size: 8.5px;
+            color: #999999;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- Encabezado -->
+    <h1>Resumen general</h1>
+    <p class="subtitle">
+        Reporte del mes
+        <span th:text="${mesDescripcion}">Mes</span>
+        <span th:text="${anio}">2025</span>
+    </p>
+
+    <!-- Resumen superior -->
+    <table class="summary-grid">
+        <tr>
+            <td class="summary-card">
+                <div class="summary-label">Total clientes</div>
+                <div class="summary-value" th:text="${totalClientes}">0</div>
+                <div class="summary-help">Clientes registrados</div>
+            </td>
+
+            <td class="summary-card">
+                <div class="summary-label">Préstamos activos</div>
+                <div class="summary-value" th:text="${prestamosActivos}">0</div>
+                <div class="summary-help">
+                    <span th:text="${prestamosPagados}">0</span> pagados
+                </div>
+            </td>
+
+            <td class="summary-card">
+                <div class="summary-label">Total prestado (mes)</div>
+                <div class="summary-value">
+                    S/
+                    <span th:text="${totalPrestadoMes}">0.00</span>
+                </div>
+                <div class="summary-help">Monto total entregado</div>
+            </td>
+
+            <td class="summary-card">
+                <div class="summary-label">Pendiente de cobro</div>
+                <div class="summary-value">
+                    S/
+                    <span th:text="${pendienteCobro}">0.00</span>
+                </div>
+                <div class="summary-help">Capital aún por recuperar</div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Detalle de préstamos -->
+    <p class="section-title">Detalle de préstamos del mes</p>
+
+    <table class="report-table">
+        <thead>
+        <tr>
+            <th style="width: 4%;">ID</th>
+            <th style="width: 22%;">Persona</th>
+            <th style="width: 12%;">Objeto</th>
+            <th style="width: 12%;">Fecha préstamo</th>
+            <th style="width: 12%;">Fecha límite</th>
+            <th style="width: 12%;">Fecha devolución</th>
+            <th style="width: 14%;">Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${prestamosMes}">
+            <td th:text="${p.id}">1</td>
+            <td>
+                <span th:text="${p.persona.nombres}">Nombre</span>
+                <span th:text="${p.persona.apellidos}">Apellido</span>
+            </td>
+            <td th:text="${p.objeto.nombre}">Objeto</td>
+            <td th:text="${p.fechaPrestamo}">2025-11-01</td>
+            <td th:text="${p.fechaLimite}">2025-11-15</td>
+            <td th:text="${p.fechaDevolucion} ?: '—'">—</td>
+            <td>
+                <span class="estado-badge" th:text="${p.estado}">ACTIVO</span>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(prestamosMes)}">
+            <td colspan="7" class="muted" style="text-align: center; padding: 10px;">
+                No hay préstamos registrados en este mes.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Generado automáticamente por Mi Banquito ·
+        <span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}">
+            30/11/2025 22:00
+        </span>
+    </div>
+</div>
+</body>
+</html>
