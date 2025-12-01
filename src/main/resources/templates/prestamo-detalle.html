@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Préstamo</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+</head>
+<body class="bg-light">
+
+<div th:replace="~{fragments/navbar :: body}"></div>
+
+<div class="container mt-4 mb-5">
+
+    <!-- Migas de pan -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/prestamos}">Préstamos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Detalle #<span th:text="${prestamo.id}"></span>
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Título -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">
+            <i class="bi bi-receipt-cutoff me-2"></i>
+            Detalle del préstamo
+            <span class="text-muted">#<span th:text="${prestamo.id}"></span></span>
+        </h3>
+
+        <a th:href="@{/prestamos}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Volver al listado
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Datos del préstamo -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm detalle-card">
+                <div class="card-header bg-dark text-white">
+                    <i class="bi bi-person-badge me-1"></i> Información general
+                </div>
+                <div class="card-body">
+                    <p class="mb-2">
+                        <span class="fw-semibold">Persona:</span><br>
+                        <span th:text="${prestamo.persona.nombres + ' ' + prestamo.persona.apellidos}"></span>
+                    </p>
+                    <p class="mb-2">
+                        <span class="fw-semibold">Objeto:</span><br>
+                        <span th:text="${prestamo.objeto.nombre}"></span>
+                    </p>
+                    <p class="mb-2">
+                        <span class="fw-semibold">Fecha préstamo:</span><br>
+                        <span th:text="${prestamo.fechaPrestamo}"></span>
+                    </p>
+                    <p class="mb-2">
+                        <span class="fw-semibold">Fecha límite:</span><br>
+                        <span th:text="${prestamo.fechaLimite}"></span>
+                    </p>
+                    <p class="mb-2">
+                        <span class="fw-semibold">Fecha devolución:</span><br>
+                        <span th:text="${prestamo.fechaDevolucion} ?: '—'"></span>
+                    </p>
+                    <p class="mb-0">
+                        <span class="fw-semibold">Estado:</span><br>
+                        <span th:switch="${prestamo.estado}">
+                            <span th:case="'ACTIVO'" class="badge bg-warning text-dark">
+                                <i class="bi bi-clock-history"></i> Activo
+                            </span>
+                            <span th:case="'DEVUELTO'" class="badge bg-success">
+                                <i class="bi bi-check-circle"></i> Devuelto
+                            </span>
+                            <span th:case="'VENCIDO'" class="badge bg-danger">
+                                <i class="bi bi-exclamation-triangle"></i> Vencido
+                            </span>
+                            <span th:case="'ENTREGADO ATRASADO'" class="badge bg-secondary">
+                                <i class="bi bi-arrow-left-right"></i> Entregado con retraso
+                            </span>
+                            <span th:case="*"
+                                  class="badge bg-secondary"
+                                  th:text="${prestamo.estado}"></span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empeños + Documentos -->
+        <div class="col-lg-8">
+            <!-- Empeños -->
+            <div class="card shadow-sm mb-4 detalle-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-gem me-1"></i> Empeños</span>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-striped align-middle small">
+                            <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Valor estimado</th>
+                                <th>Observaciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="emp : ${empenos}">
+                                <td th:text="${emp.id}"></td>
+                                <td th:text="${emp.descripcion}"></td>
+                                <td th:text="${emp.valorEstimado}"></td>
+                                <td th:text="${emp.observaciones}"></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(empenos)}">
+                                <td colspan="4" class="text-center text-muted py-3">
+                                    <i class="bi bi-inboxes"></i> No hay empeños registrados.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Form agregar empeño -->
+                <div class="card-footer bg-light">
+                    <form th:action="@{'/prestamos/' + ${prestamo.id} + '/empenos'}"
+                          method="post"
+                          class="row g-2 align-items-end">
+
+                        <div class="col-md-4">
+                            <label class="form-label mb-1">Descripción</label>
+                            <input type="text" name="descripcion" class="form-control form-control-sm"
+                                   placeholder="Ej. cadena de oro" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label mb-1">Valor (S/.)</label>
+                            <input type="number" step="0.01" name="valorEstimado"
+                                   class="form-control form-control-sm"
+                                   placeholder="0.00">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label mb-1">Observaciones</label>
+                            <input type="text" name="observaciones"
+                                   class="form-control form-control-sm"
+                                   placeholder="Opcional">
+                        </div>
+                        <div class="col-md-1 d-grid">
+                            <button type="submit" class="btn btn-sm btn-primary mt-3 mt-md-0">
+                                <i class="bi bi-plus-circle"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Documentos -->
+            <div class="card shadow-sm detalle-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-file-earmark-text me-1"></i> Documentos del préstamo</span>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-striped align-middle small">
+                            <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo</th>
+                                <th>Número</th>
+                                <th>Fecha registro</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="doc : ${documentos}">
+                                <td th:text="${doc.id}"></td>
+                                <td th:text="${doc.tipoDocumento}"></td>
+                                <td th:text="${doc.numeroDocumento}"></td>
+                                <td th:text="${doc.fechaRegistro}"></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(documentos)}">
+                                <td colspan="4" class="text-center text-muted py-3">
+                                    <i class="bi bi-inboxes"></i> No hay documentos registrados.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Form agregar documento -->
+                <div class="card-footer bg-light">
+                    <form th:action="@{'/prestamos/' + ${prestamo.id} + '/documentos'}"
+                          method="post"
+                          class="row g-2 align-items-end">
+
+                        <div class="col-md-3">
+                            <label class="form-label mb-1">Tipo</label>
+                            <input type="text" name="tipoDocumento" class="form-control form-control-sm"
+                                   placeholder="DNI, contrato..." required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label mb-1">Número</label>
+                            <input type="text" name="numeroDocumento" class="form-control form-control-sm"
+                                   placeholder="N° documento">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label mb-1">Ruta archivo</label>
+                            <input type="text" name="rutaArchivo" class="form-control form-control-sm"
+                                   placeholder="/ruta/opcional">
+                        </div>
+
+                        <div class="col-12 mt-2 text-end">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                <i class="bi bi-plus-circle me-1"></i> Agregar documento
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

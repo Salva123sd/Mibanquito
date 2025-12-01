@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<body>
+<nav th:fragment="body" class="navbar navbar-expand-lg navbar-banquito mb-4">
+    <div class="container">
+
+        <!-- Marca: ahora apunta al dashboard -->
+        <a class="navbar-brand fw-semibold d-flex align-items-center gap-2"
+           th:href="@{/dashboard}">
+            <i class="bi bi-piggy-bank-fill"></i>
+            <span>Mi Banquito</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbarNav" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+
+                <!-- DASHBOARD -->
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-1"
+                       th:href="@{/dashboard}"
+                       th:classappend="${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/dashboard')} ? ' active' : ''"
+                       th:attr="aria-current=${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/dashboard')} ? 'page' : null">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- PERSONAS -->
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-1"
+                       th:href="@{/personas}"
+                       th:classappend="${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/personas')} ? ' active' : ''"
+                       th:attr="aria-current=${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/personas')} ? 'page' : null">
+                        <i class="bi bi-people"></i>
+                        <span>Personas</span>
+                    </a>
+                </li>
+
+                <!-- OBJETOS -->
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-1"
+                       th:href="@{/objetos}"
+                       th:classappend="${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/objetos')} ? ' active' : ''"
+                       th:attr="aria-current=${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/objetos')} ? 'page' : null">
+                        <i class="bi bi-cpu"></i>
+                        <span>Objetos</span>
+                    </a>
+                </li>
+
+                <!-- PRÉSTAMOS -->
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-1"
+                       th:href="@{/prestamos}"
+                       th:classappend="${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/prestamos')} ? ' active' : ''"
+                       th:attr="aria-current=${#httpServletRequest != null and #strings.startsWith(#httpServletRequest.requestURI,'/prestamos')} ? 'page' : null">
+                        <i class="bi bi-arrow-left-right"></i>
+                        <span>Préstamos</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

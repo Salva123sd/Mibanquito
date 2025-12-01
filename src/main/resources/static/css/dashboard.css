@@ -1,0 +1,160 @@
+/* Poppins para todo el dashboard */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-purple-600: oklch(.558 .288 302.321);
+    --color-purple-500: oklch(.62 .27 302.321);
+    --color-purple-100: #f5ebff;
+
+    --color-bg: #faf8ff;
+    --color-surface: #ffffff;
+    --color-border-soft: #e5e7eb;
+    --color-text-main: #111827;
+    --color-text-muted: #6b7280;
+}
+
+/* Fondo general como el resto del sistema */
+body {
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 0% 0%, #f6f0ff 0, #faf8ff 40%, #f9fafb 100%);
+    color: var(--color-text-main);
+}
+
+/* Contenedor principal del dashboard */
+.dashboard-wrapper {
+    max-width: 1180px;
+    margin: 1.8rem auto 3rem;
+    padding-inline: .75rem;
+}
+
+/* Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: .2rem;
+}
+
+.dashboard-header p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: .95rem;
+}
+
+/* Tarjeta de métrica */
+.stat-card {
+    background: var(--color-surface);
+    border-radius: 18px;
+    padding: 1.15rem 1.25rem 1.1rem;
+    box-shadow:
+        0 14px 35px rgba(15, 23, 42, 0.10),
+        0 0 0 1px rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    transition: transform .15s ease-out, box-shadow .15s ease-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.14),
+        0 0 0 1px rgba(255, 255, 255, 0.9);
+}
+
+/* Header de cada tarjeta */
+.stat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-label {
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+/* Icono redondito al lado derecho */
+.stat-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+/* Colores de iconos */
+.stat-icon--purple {
+    background: rgba(168, 85, 247, 0.12);
+    color: var(--color-purple-600);
+}
+
+.stat-icon--pink {
+    background: rgba(236, 72, 153, 0.12);
+    color: #ec4899;
+}
+
+.stat-icon--indigo {
+    background: rgba(79, 70, 229, 0.12);
+    color: #4f46e5;
+}
+
+.stat-icon--orange {
+    background: rgba(249, 115, 22, 0.12);
+    color: #f97316;
+}
+
+/* Valor principal */
+.stat-main {
+    display: flex;
+    align-items: baseline;
+    gap: .3rem;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.stat-subvalue {
+    font-size: .9rem;
+    color: var(--color-text-muted);
+}
+
+/* Para los montos en dinero */
+.stat-currency {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-right: .1rem;
+}
+
+/* Línea de detalle */
+.stat-footer {
+    font-size: .8rem;
+    color: var(--color-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .4rem;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.7rem;
+    }
+}

@@ -1,0 +1,258 @@
+/* ========= Tema Mi Banquito – Objetos (light) ========= */
+
+:root {
+    --color-purple-600: oklch(.558 .288 302.321);
+    --color-purple-500: oklch(.62 .27 302.321);
+    --color-purple-100: #f5ebff;
+
+    --color-bg: #faf8ff;
+    --color-surface: #ffffff;
+    --color-border-soft: #e5e7eb;
+    --color-text-main: #111827;
+    --color-text-muted: #6b7280;
+    --radius-xl: 24px;
+}
+
+/* Fondo general claro con degradado suave + tipografía Poppins */
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 0% 0%, #f6f0ff 0, #faf8ff 40%, #f9fafb 100%);
+    color: var(--color-text-main);
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", sans-serif;
+    font-size: 0.95rem;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Centrar el contenido y darle aire */
+.container {
+    max-width: 1180px;
+    margin-top: 1.8rem;
+    margin-bottom: 3rem;
+}
+
+/* ---------- CARD PRINCIPAL ---------- */
+
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid #ede9fe;
+    box-shadow:
+        0 16px 40px rgba(15, 23, 42, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.9);
+    color: var(--color-text-main);
+    overflow: hidden;
+}
+
+/* Header: morado claro, estilo pill grande */
+.card-header.bg-dark {
+    background: linear-gradient(90deg,
+        var(--color-purple-600),
+        color-mix(in oklch, var(--color-purple-600) 60%, white));
+    border-bottom: none;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 600; /* Poppins más marcado en el título */
+}
+
+/* ---------- FORMULARIO SUPERIOR (estilo barra de búsqueda) ---------- */
+
+.card-body {
+    padding: 1.3rem 1.4rem 1.1rem;
+    background: linear-gradient(180deg, #faf5ff, #ffffff 40%);
+}
+
+.card-body form {
+    margin-bottom: 1rem;
+}
+
+.card-body .row.g-2 {
+    align-items: center;
+}
+
+/* Inputs tipo pill, claros */
+.card-body .form-control {
+    background-color: #f9fafb;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    color: var(--color-text-main);
+    font-size: .9rem;
+    padding-inline: 1rem;
+    font-weight: 400;
+}
+
+.card-body .form-control::placeholder {
+    color: var(--color-text-muted);
+}
+
+.card-body .form-control:focus {
+    border-color: var(--color-purple-500);
+    box-shadow: 0 0 0 0.14rem rgba(168, 85, 247, 0.25);
+}
+
+/* Botón Guardar: pill morado tipo “Nuevo cliente” */
+.card-body .btn-primary {
+    background: linear-gradient(135deg,
+        var(--color-purple-600),
+        color-mix(in oklch, var(--color-purple-600) 70%, white));
+    border: none;
+    border-radius: 999px;
+    font-weight: 500;
+    box-shadow: 0 10px 25px rgba(147, 51, 234, 0.35);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+}
+
+.card-body .btn-primary:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+}
+
+/* ---------- TABLA – ESTILO SUAVE ---------- */
+
+.table-responsive {
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    overflow: hidden;
+}
+
+/* Encabezado claro, sin negro */
+.table thead.table-dark {
+    background-color: #f5f3ff !important;          /* lila muy suave */
+    color: #4b5563 !important;                     /* gris medio */
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table thead.table-dark th {
+    border-bottom: none;
+    font-weight: 600;
+}
+
+/* Tabla base */
+
+.table {
+    margin-bottom: 0;
+    font-size: .9rem;
+    color: var(--color-text-main);
+    border-color: #f3f4f6;
+}
+
+/* Filas limpias y claras */
+.table-striped > tbody > tr:nth-of-type(odd) {
+    --bs-table-bg-type: #ffffff;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+    --bs-table-bg-type: #f9fafb;
+}
+
+/* Hover con lila muy suave */
+.table-hover > tbody > tr:hover {
+    --bs-table-bg-state: #f3e8ff;
+}
+
+/* Líneas divisorias sutiles */
+.table > :not(caption) > * > * {
+    border-bottom-color: #eef2ff;
+}
+
+/* Badges de estado más pastel */
+
+.badge.bg-success {
+    background-color: #22c55e !important;
+    color: #065f46 !important;
+    border-radius: 999px;
+    padding-inline: .9rem;
+    font-weight: 500;
+}
+
+.badge.bg-warning {
+    background-color: #fbbf24 !important;
+    color: #78350f !important;
+    border-radius: 999px;
+    padding-inline: .9rem;
+    font-weight: 500;
+}
+
+/* Botón Eliminar: redondo y menos agresivo */
+
+.btn-danger.btn-sm {
+    border-radius: 999px;
+    padding-inline: 1rem;
+    padding-block: .3rem;
+    font-size: .8rem;
+    background-color: #ef4444;
+    border: none;
+    font-weight: 500;
+}
+
+.btn-danger.btn-sm:hover {
+    background-color: #dc2626;
+}
+
+/* ---------- BOTONES INFERIORES ---------- */
+
+.d-flex.gap-2.mt-3 {
+    margin-top: 1.7rem !important;
+}
+
+.d-flex.gap-2.mt-3 .btn-secondary,
+.d-flex.gap-2.mt-3 .btn-success {
+    border-radius: 999px;
+    padding-inline: 1.4rem;
+    font-size: .9rem;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    border: none;
+    font-weight: 500;
+}
+
+.d-flex.gap-2.mt-3 .btn-secondary {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.d-flex.gap-2.mt-3 .btn-success {
+    background: #16a34a;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-body .row.g-2 > [class^="col-"] {
+        margin-bottom: .6rem;
+    }
+}
+
+/* ====== FIX: encabezado de la tabla demasiado oscuro ====== */
+/* Bootstrap le pone negro a .table-dark, así que lo sobreescribimos fuerte */
+
+thead.table-dark,
+thead.table-dark tr,
+thead.table-dark th {
+    background-color: #f5f3ff !important;   /* lila muy suave */
+    color: #4b5563 !important;              /* gris medio */
+    border-color: #e5e7eb !important;
+}
+
+/* También bajamos un poco la altura para que se vea más fino */
+thead.table-dark th {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
