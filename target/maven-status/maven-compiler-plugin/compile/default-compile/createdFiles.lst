@@ -1,5 +1,9 @@
 com\ARFastCheck\ARFastCheck\model\DocumentoPrestamo.class
+com\ARFastCheck\ARFastCheck\model\Cliente.class
+com\ARFastCheck\ARFastCheck\config\SecurityConfig.class
+com\ARFastCheck\ARFastCheck\repository\ClienteRepository.class
 com\ARFastCheck\ARFastCheck\controller\PrestamoViewController.class
+com\ARFastCheck\ARFastCheck\service\ClienteService.class
 com\ARFastCheck\ARFastCheck\controller\ObjetoViewController.class
 com\ARFastCheck\ARFastCheck\service\ReniecService.class
 com\ARFastCheck\ARFastCheck\model\Persona.class
@@ -10,6 +14,7 @@ com\ARFastCheck\ARFastCheck\service\PrestamoService.class
 com\ARFastCheck\ARFastCheck\config\RestClientConfig.class
 com\ARFastCheck\ARFastCheck\repository\EmpenoRepository.class
 com\ARFastCheck\ARFastCheck\dto\ReniecResponse.class
+com\ARFastCheck\ARFastCheck\service\CustomUserDetailsService.class
 com\ARFastCheck\ARFastCheck\model\Objeto.class
 com\ARFastCheck\ARFastCheck\service\PersonaService.class
 com\ARFastCheck\ARFastCheck\controller\ReporteMensualController.class
@@ -22,3 +27,4 @@ com\ARFastCheck\ARFastCheck\service\ObjetoService.class
 com\ARFastCheck\ARFastCheck\repository\PrestamoRepository.class
 com\ARFastCheck\ARFastCheck\repository\PersonaRepository.class
 com\ARFastCheck\ARFastCheck\service\DocumentoPrestamoService.class
+com\ARFastCheck\ARFastCheck\controller\AuthController.class
