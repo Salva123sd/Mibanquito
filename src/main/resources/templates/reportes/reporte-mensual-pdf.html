@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Reporte mensual</title>
 
     <style>
@@ -14,7 +15,7 @@
         /* -------- Tipografía y generales -------- */
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                         "Segoe UI", sans-serif;
+                "Segoe UI", sans-serif;
             font-size: 11px;
             color: #222222;
             background-color: #ffffff;
@@ -132,99 +133,103 @@
         }
     </style>
 </head>
+
 <body>
-<div class="page">
+    <div class="page">
 
-    <!-- Encabezado -->
-    <h1>Resumen general</h1>
-    <p class="subtitle">
-        Reporte del mes
-        <span th:text="${mesDescripcion}">Mes</span>
-        <span th:text="${anio}">2025</span>
-    </p>
+        <!-- Encabezado -->
+        <h1>Resumen general</h1>
+        <p class="subtitle">
+            Reporte del mes
+            <span th:text="${mesDescripcion}">Mes</span>
+            <span th:text="${anio}">2025</span>
+        </p>
 
-    <!-- Resumen superior -->
-    <table class="summary-grid">
-        <tr>
-            <td class="summary-card">
-                <div class="summary-label">Total clientes</div>
-                <div class="summary-value" th:text="${totalClientes}">0</div>
-                <div class="summary-help">Clientes registrados</div>
-            </td>
+        <!-- Resumen superior -->
+        <table class="summary-grid">
+            <tr>
+                <td class="summary-card">
+                    <div class="summary-label">Total clientes</div>
+                    <div class="summary-value" th:text="${totalClientes}">0</div>
+                    <div class="summary-help">Clientes registrados</div>
+                </td>
 
-            <td class="summary-card">
-                <div class="summary-label">Préstamos activos</div>
-                <div class="summary-value" th:text="${prestamosActivos}">0</div>
-                <div class="summary-help">
-                    <span th:text="${prestamosPagados}">0</span> pagados
-                </div>
-            </td>
+                <td class="summary-card">
+                    <div class="summary-label">Préstamos activos</div>
+                    <div class="summary-value" th:text="${prestamosActivos}">0</div>
+                    <div class="summary-help">
+                        <span th:text="${prestamosPagados}">0</span> pagados
+                    </div>
+                </td>
 
-            <td class="summary-card">
-                <div class="summary-label">Total prestado (mes)</div>
-                <div class="summary-value">
-                    S/
-                    <span th:text="${totalPrestadoMes}">0.00</span>
-                </div>
-                <div class="summary-help">Monto total entregado</div>
-            </td>
+                <td class="summary-card">
+                    <div class="summary-label">Total prestado (mes)</div>
+                    <div class="summary-value">
+                        S/
+                        <span th:text="${totalPrestadoMes}">0.00</span>
+                    </div>
+                    <div class="summary-help">Monto total entregado</div>
+                </td>
 
-            <td class="summary-card">
-                <div class="summary-label">Pendiente de cobro</div>
-                <div class="summary-value">
-                    S/
-                    <span th:text="${pendienteCobro}">0.00</span>
-                </div>
-                <div class="summary-help">Capital aún por recuperar</div>
-            </td>
-        </tr>
-    </table>
+                <td class="summary-card">
+                    <div class="summary-label">Pendiente de cobro</div>
+                    <div class="summary-value">
+                        S/
+                        <span th:text="${pendienteCobro}">0.00</span>
+                    </div>
+                    <div class="summary-help">Capital aún por recuperar</div>
+                </td>
+            </tr>
+        </table>
 
-    <!-- Detalle de préstamos -->
-    <p class="section-title">Detalle de préstamos del mes</p>
+        <!-- Detalle de préstamos -->
+        <p class="section-title">Detalle de préstamos del mes</p>
 
-    <table class="report-table">
-        <thead>
-        <tr>
-            <th style="width: 4%;">ID</th>
-            <th style="width: 22%;">Persona</th>
-            <th style="width: 12%;">Objeto</th>
-            <th style="width: 12%;">Fecha préstamo</th>
-            <th style="width: 12%;">Fecha límite</th>
-            <th style="width: 12%;">Fecha devolución</th>
-            <th style="width: 14%;">Estado</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="p : ${prestamosMes}">
-            <td th:text="${p.id}">1</td>
-            <td>
-                <span th:text="${p.persona.nombres}">Nombre</span>
-                <span th:text="${p.persona.apellidos}">Apellido</span>
-            </td>
-            <td th:text="${p.objeto.nombre}">Objeto</td>
-            <td th:text="${p.fechaPrestamo}">2025-11-01</td>
-            <td th:text="${p.fechaLimite}">2025-11-15</td>
-            <td th:text="${p.fechaDevolucion} ?: '—'">—</td>
-            <td>
-                <span class="estado-badge" th:text="${p.estado}">ACTIVO</span>
-            </td>
-        </tr>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th style="width: 4%;">ID</th>
+                    <th style="width: 22%;">Persona</th>
+                    <th style="width: 12%;">Objeto</th>
+                    <th style="width: 12%;">Fecha préstamo</th>
+                    <th style="width: 12%;">Fecha límite</th>
+                    <th style="width: 12%;">Fecha devolución</th>
+                    <th style="width: 14%;">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${prestamosMes}">
+                    <td th:text="${p.id}">1</td>
+                    <td>
+                        <span th:text="${p.persona.nombres}">Nombre</span>
+                        <span th:text="${p.persona.apellidos}">Apellido</span>
+                    </td>
+                    <td>S/ <span
+                            th:text="${#numbers.formatDecimal(p.objeto.monto ?: 0, 1, 'POINT', 2, 'COMMA')}">0.00</span>
+                    </td>
+                    <td th:text="${p.fechaPrestamo}">2025-11-01</td>
+                    <td th:text="${p.fechaLimite}">2025-11-15</td>
+                    <td th:text="${p.fechaDevolucion} ?: '—'">—</td>
+                    <td>
+                        <span class="estado-badge" th:text="${p.estado}">ACTIVO</span>
+                    </td>
+                </tr>
 
-        <tr th:if="${#lists.isEmpty(prestamosMes)}">
-            <td colspan="7" class="muted" style="text-align: center; padding: 10px;">
-                No hay préstamos registrados en este mes.
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <tr th:if="${#lists.isEmpty(prestamosMes)}">
+                    <td colspan="7" class="muted" style="text-align: center; padding: 10px;">
+                        No hay préstamos registrados en este mes.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <div class="footer">
-        Generado automáticamente por Mi Banquito ·
-        <span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}">
-            30/11/2025 22:00
-        </span>
+        <div class="footer">
+            Generado automáticamente por Mi Banquito ·
+            <span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}">
+                30/11/2025 22:00
+            </span>
+        </div>
     </div>
-</div>
 </body>
+
 </html>

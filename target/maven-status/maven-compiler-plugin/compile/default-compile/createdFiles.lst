@@ -21,6 +21,7 @@ com\ARFastCheck\ARFastCheck\controller\ReporteMensualController.class
 com\ARFastCheck\ARFastCheck\repository\ObjetoRepository.class
 com\ARFastCheck\ARFastCheck\controller\DashboardController.class
 com\ARFastCheck\ARFastCheck\controller\PersonaViewController.class
+com\ARFastCheck\ARFastCheck\config\DataInitializer.class
 com\ARFastCheck\ARFastCheck\model\Empeno.class
 com\ARFastCheck\ARFastCheck\service\EmpenoService.class
 com\ARFastCheck\ARFastCheck\service\ObjetoService.class

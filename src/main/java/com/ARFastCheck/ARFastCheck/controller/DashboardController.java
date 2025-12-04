@@ -1,6 +1,7 @@
 package com.ARFastCheck.ARFastCheck.controller;
 
 import com.ARFastCheck.ARFastCheck.model.Prestamo;
+import com.ARFastCheck.ARFastCheck.repository.EmpenoRepository;
 import com.ARFastCheck.ARFastCheck.repository.PersonaRepository;
 import com.ARFastCheck.ARFastCheck.repository.PrestamoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,51 +10,56 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
 @RequestMapping("/dashboard")
 public class DashboardController {
 
-    @Autowired
-    private PersonaRepository personaRepository;
+        @Autowired
+        private PersonaRepository personaRepository;
 
-    @Autowired
-    private PrestamoRepository prestamoRepository;
+        @Autowired
+        private PrestamoRepository prestamoRepository;
 
-    @GetMapping
-    public String verDashboard(Model model) {
+        @Autowired
+        private EmpenoRepository empenoRepository;
 
-        // 1) Total de clientes
-        long totalClientes = personaRepository.count();
+        @GetMapping
+        public String verDashboard(Model model) {
 
-        // 2) Obtener todos los préstamos
-        List<Prestamo> prestamos = prestamoRepository.findAll();
+                // 1) Total de clientes
+                long totalClientes = personaRepository.count();
 
-        // 3) Contar por estado usando streams
-        long prestamosActivos = prestamos.stream()
-                .filter(p -> p.getEstado() != null &&
-                        (p.getEstado().equalsIgnoreCase("ACTIVO")
-                                || p.getEstado().equalsIgnoreCase("VENCIDO")))
-                .count();
+                // 2) Obtener todos los préstamos
+                List<Prestamo> prestamos = prestamoRepository.findAll();
 
-        long prestamosPagados = prestamos.stream()
-                .filter(p -> p.getEstado() != null &&
-                        (p.getEstado().equalsIgnoreCase("DEVUELTO")
-                                || p.getEstado().equalsIgnoreCase("ENTREGADO ATRASADO")))
-                .count();
+                // 3) Contar por estado usando streams
+                long prestamosActivos = prestamos.stream()
+                                .filter(p -> p.getEstado() != null &&
+                                                (p.getEstado().equalsIgnoreCase("ACTIVO")
+                                                                || p.getEstado().equalsIgnoreCase("VENCIDO")))
+                                .count();
 
-        // 4) Totales de dinero (por ahora en 0 hasta que tengas campos de monto)
-        double totalPrestado = 0.0;
-        double pendienteCobro = 0.0;
+                long prestamosPagados = prestamos.stream()
+                                .filter(p -> p.getEstado() != null &&
+                                                (p.getEstado().equalsIgnoreCase("DEVUELTO")
+                                                                || p.getEstado().equalsIgnoreCase(
+                                                                                "ENTREGADO ATRASADO")))
+                                .count();
 
-        // 5) Enviar datos a la vista
-        model.addAttribute("totalClientes", totalClientes);
-        model.addAttribute("prestamosActivos", prestamosActivos);
-        model.addAttribute("prestamosPagados", prestamosPagados);
-        model.addAttribute("totalPrestado", totalPrestado);
-        model.addAttribute("pendienteCobro", pendienteCobro);
+                // 4) Totales de dinero desde empeños
+                BigDecimal totalPrestado = empenoRepository.sumTotalPrestado();
+                BigDecimal pendienteCobro = empenoRepository.sumPendienteCobro();
 
-        return "dashboard";
-    }
+                // 5) Enviar datos a la vista
+                model.addAttribute("totalClientes", totalClientes);
+                model.addAttribute("prestamosActivos", prestamosActivos);
+                model.addAttribute("prestamosPagados", prestamosPagados);
+                model.addAttribute("totalPrestado", totalPrestado);
+                model.addAttribute("pendienteCobro", pendienteCobro);
+
+                return "dashboard";
+        }
 }

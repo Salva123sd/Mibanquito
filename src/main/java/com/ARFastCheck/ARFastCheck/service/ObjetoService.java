@@ -2,6 +2,7 @@ package com.ARFastCheck.ARFastCheck.service;
 
 import com.ARFastCheck.ARFastCheck.model.Objeto;
 import com.ARFastCheck.ARFastCheck.repository.ObjetoRepository;
+import com.ARFastCheck.ARFastCheck.repository.PrestamoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ public class ObjetoService {
 
     @Autowired
     private ObjetoRepository objetoRepository;
+
+    @Autowired
+    private PrestamoRepository prestamoRepository;
 
     // Listar todos los objetos
     public List<Objeto> listarObjetos() {
@@ -27,11 +31,16 @@ public class ObjetoService {
     }
 
     // Eliminar objeto por ID
-    public boolean eliminarObjeto(Long id) {
-        if (objetoRepository.existsById(id)) {
-            objetoRepository.deleteById(id);
-            return true;
+    public String eliminarObjeto(Long id) {
+        if (!objetoRepository.existsById(id)) {
+            return "NO_ENCONTRADO";
         }
-        return false;
+        // Solo bloquear si tiene préstamos ACTIVOS o VENCIDOS
+        List<String> estadosActivos = List.of("ACTIVO", "VENCIDO");
+        if (prestamoRepository.existsByObjetoIdAndEstadoIn(id, estadosActivos)) {
+            return "TIENE_PRESTAMOS";
+        }
+        objetoRepository.deleteById(id);
+        return "ELIMINADO";
     }
 }

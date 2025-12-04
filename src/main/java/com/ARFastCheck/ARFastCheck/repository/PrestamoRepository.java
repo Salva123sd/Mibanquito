@@ -15,4 +15,7 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, Long> {
 
     // Contar por estado (ACTIVO, DEVUELTO, VENCIDO, ENTREGADO ATRASADO)
     long countByEstado(String estado);
+
+    // Verificar si existen préstamos ACTIVOS o VENCIDOS para un objeto
+    boolean existsByObjetoIdAndEstadoIn(Long objetoId, List<String> estados);
 }

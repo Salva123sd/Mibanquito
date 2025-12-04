@@ -35,12 +35,21 @@ public class ObjetoViewController {
     // Eliminar objeto
     @PostMapping("/eliminar/{id}")
     public String eliminarObjeto(@PathVariable Long id, RedirectAttributes redirectAttrs) {
-        if (objetoService.eliminarObjeto(id)) {
-            redirectAttrs.addFlashAttribute("mensaje", "Objeto eliminado correctamente.");
-            redirectAttrs.addFlashAttribute("clase", "success");
-        } else {
-            redirectAttrs.addFlashAttribute("mensaje", "No se encontró el objeto.");
-            redirectAttrs.addFlashAttribute("clase", "danger");
+        String resultado = objetoService.eliminarObjeto(id);
+        switch (resultado) {
+            case "ELIMINADO":
+                redirectAttrs.addFlashAttribute("mensaje", "Objeto eliminado correctamente.");
+                redirectAttrs.addFlashAttribute("clase", "success");
+                break;
+            case "TIENE_PRESTAMOS":
+                redirectAttrs.addFlashAttribute("mensaje",
+                        "No se puede eliminar: el objeto tiene préstamos registrados.");
+                redirectAttrs.addFlashAttribute("clase", "danger");
+                break;
+            default:
+                redirectAttrs.addFlashAttribute("mensaje", "No se encontró el objeto.");
+                redirectAttrs.addFlashAttribute("clase", "danger");
+                break;
         }
         return "redirect:/objetos";
     }
