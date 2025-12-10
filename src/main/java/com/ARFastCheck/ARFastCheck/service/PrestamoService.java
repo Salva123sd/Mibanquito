@@ -41,7 +41,7 @@ public class PrestamoService {
     }
 
     // Registrar préstamo
-    public boolean registrarPrestamo(String dni, Long objetoId, String fechaLimite) {
+    public boolean registrarPrestamo(String dni, Long objetoId, String fechaLimite, Double interesPorcentaje) {
         Persona persona = personaRepository.findById(dni).orElse(null);
         Objeto objeto = objetoRepository.findById(objetoId).orElse(null);
 
@@ -52,6 +52,12 @@ public class PrestamoService {
             prestamo.setFechaPrestamo(LocalDate.now());
             prestamo.setFechaLimite(LocalDate.parse(fechaLimite));
             prestamo.setEstado("ACTIVO");
+
+            // Calcular interés y total a pagar
+            prestamo.setInteresPorcentaje(interesPorcentaje != null ? interesPorcentaje : 0.0);
+            Double monto = objeto.getMonto() != null ? objeto.getMonto().doubleValue() : 0.0;
+            Double interes = monto * (interesPorcentaje != null ? interesPorcentaje : 0.0) / 100;
+            prestamo.setTotalPagar(monto + interes);
 
             objeto.setEstado("PRESTADO");
 

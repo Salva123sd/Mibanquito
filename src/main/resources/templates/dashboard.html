@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Dashboard · Mi Banquito</title>
@@ -12,110 +13,184 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
+
 <body>
 
-<!-- Navbar reutilizada -->
-<div th:replace="~{fragments/navbar :: body}"></div>
+    <!-- Navbar reutilizada -->
+    <div th:replace="~{fragments/navbar :: body}"></div>
 
-<main class="dashboard-wrapper">
+    <main class="dashboard-wrapper">
 
-    <!-- Header del dashboard -->
-    <section class="dashboard-header">
-        <div>
-            <h1>Resumen general</h1>
-            <p>Un vistazo rápido al estado de tu banquito.</p>
-        </div>
-    </section>
+        <!-- Header del dashboard -->
+        <section class="dashboard-header">
+            <div>
+                <h1>Resumen general</h1>
+                <p>Un vistazo rápido al estado de tu banquito.</p>
+            </div>
+        </section>
 
-    <!-- Tarjetas de métricas -->
-    <section class="row g-3 mt-1">
+        <!-- Tarjetas de métricas -->
+        <section class="row g-3 mt-1">
 
 
-        <!-- Total clientes -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <div class="stat-card">
-                <div class="stat-card-header">
-                    <span class="stat-label">Total clientes</span>
-                    <span class="stat-icon stat-icon--purple">
-                        <i class="bi bi-people-fill"></i>
-                    </span>
-                </div>
-                <div class="stat-main">
-                    <span class="stat-value" th:text="${totalClientes}">0</span>
-                </div>
-                <div class="stat-footer">
-                    Clientes registrados
+            <!-- Total clientes -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <span class="stat-label">Total clientes</span>
+                        <span class="stat-icon stat-icon--purple">
+                            <i class="bi bi-people-fill"></i>
+                        </span>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-value" th:text="${totalClientes}">0</span>
+                    </div>
+                    <div class="stat-footer">
+                        Clientes registrados
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Préstamos activos -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <div class="stat-card">
-                <div class="stat-card-header">
-                    <span class="stat-label">Préstamos activos</span>
-                    <span class="stat-icon stat-icon--pink">
-                        <i class="bi bi-cash-stack"></i>
-                    </span>
-                </div>
-                <div class="stat-main">
-                    <span class="stat-value" th:text="${prestamosActivos}">0</span>
-                    <span class="stat-subvalue" th:text="' · ' + ${prestamosPagados} + ' pagados'">· 0 pagados</span>
-                </div>
-                <div class="stat-footer">
-                    Estado actual de los préstamos
+            <!-- Préstamos activos -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <span class="stat-label">Préstamos activos</span>
+                        <span class="stat-icon stat-icon--pink">
+                            <i class="bi bi-cash-stack"></i>
+                        </span>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-value" th:text="${prestamosActivos}">0</span>
+                        <span class="stat-subvalue" th:text="' · ' + ${prestamosPagados} + ' pagados'">· 0
+                            pagados</span>
+                    </div>
+                    <div class="stat-footer">
+                        Estado actual de los préstamos
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Total prestado -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <div class="stat-card">
-                <div class="stat-card-header">
-                    <span class="stat-label">Total prestado</span>
-                    <span class="stat-icon stat-icon--indigo">
-                        <i class="bi bi-graph-up-arrow"></i>
-                    </span>
-                </div>
-                <div class="stat-main">
-                    <span class="stat-currency">S/</span>
-                    <span class="stat-value"
-                          th:text="${#numbers.formatDecimal(totalPrestado ?: 0, 1, 'POINT', 2, 'POINT')}">0.00</span>
-                </div>
-                <div class="stat-footer">
-                    Monto total entregado
+            <!-- Total prestado -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <span class="stat-label">Total prestado</span>
+                        <span class="stat-icon stat-icon--indigo">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </span>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-currency">S/</span>
+                        <span class="stat-value"
+                            th:text="${#numbers.formatDecimal(totalPrestado ?: 0, 1, 'POINT', 2, 'POINT')}">0.00</span>
+                    </div>
+                    <div class="stat-footer">
+                        Monto total entregado
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Pendiente de cobro -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <div class="stat-card">
-                <div class="stat-card-header">
-                    <span class="stat-label">Pendiente de cobro</span>
-                    <span class="stat-icon stat-icon--orange">
-                        <i class="bi bi-clock-history"></i>
-                    </span>
-                </div>
-                <div class="stat-main">
-                    <span class="stat-currency">S/</span>
-                    <span class="stat-value"
-                          th:text="${#numbers.formatDecimal(pendienteCobro ?: 0, 1, 'POINT', 2, 'POINT')}">0.00</span>
-                </div>
-                <div class="stat-footer">
-                    Capital aún por recuperar
+            <!-- Pendiente de cobro -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <span class="stat-label">Pendiente de cobro</span>
+                        <span class="stat-icon stat-icon--orange">
+                            <i class="bi bi-clock-history"></i>
+                        </span>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-currency">S/</span>
+                        <span class="stat-value"
+                            th:text="${#numbers.formatDecimal(pendienteCobro ?: 0, 1, 'POINT', 2, 'POINT')}">0.00</span>
+                    </div>
+                    <div class="stat-footer">
+                        Capital aún por recuperar
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <!-- Sección de Clientes Frecuentes y Morosos -->
+        <section class="row g-4 mt-4">
+
+            <!-- Clientes Frecuentes -->
+            <div class="col-12 col-lg-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-success text-white d-flex align-items-center gap-2">
+                        <i class="bi bi-star-fill"></i>
+                        <h5 class="mb-0">Top 5 Clientes Frecuentes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(clientesFrecuentes)}" class="text-center text-muted py-4">
+                            <i class="bi bi-people"></i> No hay datos de clientes aún.
+                        </div>
+                        <ul th:unless="${#lists.isEmpty(clientesFrecuentes)}" class="list-group list-group-flush">
+                            <li th:each="cliente, iterStat : ${clientesFrecuentes}"
+                                class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge bg-success me-2" th:text="'#' + ${iterStat.index + 1}"></span>
+                                    <strong th:text="${cliente.nombres + ' ' + cliente.apellidos}"></strong>
+                                    <small class="text-muted ms-2" th:text="'DNI: ' + ${cliente.dni}"></small>
+                                </div>
+                                <span class="badge bg-primary rounded-pill"
+                                    th:text="${cliente.cantidadPrestamos + ' préstamos'}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clientes Morosos -->
+            <div class="col-12 col-lg-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-danger text-white d-flex align-items-center gap-2">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <h5 class="mb-0">Clientes Morosos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(clientesMorosos)}" class="text-center text-muted py-4">
+                            <i class="bi bi-check-circle text-success"></i> ¡No hay clientes morosos!
+                        </div>
+                        <div th:unless="${#lists.isEmpty(clientesMorosos)}">
+                            <div th:each="cliente : ${clientesMorosos}"
+                                class="alert mb-2 d-flex justify-content-between align-items-center"
+                                th:classappend="${cliente.tieneVencidoActivo} ? 'alert-danger' : 'alert-warning'">
+                                <div>
+                                    <i th:if="${cliente.tieneVencidoActivo}"
+                                        class="bi bi-exclamation-octagon-fill text-danger me-2"></i>
+                                    <i th:unless="${cliente.tieneVencidoActivo}"
+                                        class="bi bi-clock-history text-warning me-2"></i>
+                                    <strong th:text="${cliente.nombres + ' ' + cliente.apellidos}"></strong>
+                                    <small class="ms-2" th:text="'DNI: ' + ${cliente.dni}"></small>
+                                </div>
+                                <div class="text-end">
+                                    <span th:if="${cliente.tieneVencidoActivo}" class="badge bg-danger">
+                                        <i class="bi bi-clock"></i> <span th:text="${cliente.vencidosActivos}"></span>
+                                        vencido(s)
+                                    </span>
+                                    <span class="badge bg-secondary ms-1"
+                                        th:text="${cliente.cantidadMorosos + ' incidente(s)'}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="mt-4">
+            <a th:href="@{'/reportes/mensual/pdf?year=' + ${#temporals.year(#temporals.createNow())} + '&month=' + ${#temporals.month(#temporals.createNow())}}"
+                class="btn btn-primary btn-sm">
+                <i class="bi bi-file-earmark-pdf"></i> Exportar PDF del mes actual
+            </a>
         </div>
-    </section>
 
-    <a th:href="@{'/reportes/mensual/pdf?year=' + ${#temporals.year(#temporals.createNow())} + '&month=' + ${#temporals.month(#temporals.createNow())}}"
-       class="btn btn-primary btn-sm">
-        <i class="bi bi-file-earmark-pdf"></i> Exportar PDF del mes actual
-    </a>
+    </main>
 
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

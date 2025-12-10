@@ -46,11 +46,12 @@ public class PrestamoViewController {
     // Registrar préstamo
     @PostMapping("/registrar")
     public String registrarPrestamo(@RequestParam String dni,
-                                    @RequestParam Long objetoId,
-                                    @RequestParam String fechaLimite,
-                                    RedirectAttributes redirectAttrs) {
+            @RequestParam Long objetoId,
+            @RequestParam String fechaLimite,
+            @RequestParam(required = false) Double interesPorcentaje,
+            RedirectAttributes redirectAttrs) {
 
-        if (prestamoService.registrarPrestamo(dni, objetoId, fechaLimite)) {
+        if (prestamoService.registrarPrestamo(dni, objetoId, fechaLimite, interesPorcentaje)) {
             redirectAttrs.addFlashAttribute("mensaje", "Préstamo registrado correctamente.");
             redirectAttrs.addFlashAttribute("clase", "success");
         } else {
@@ -85,8 +86,8 @@ public class PrestamoViewController {
     // 🔹 Ver detalle de un préstamo (empeños + documentos)
     @GetMapping("/{id}")
     public String verDetallePrestamo(@PathVariable Long id,
-                                     Model model,
-                                     RedirectAttributes redirectAttrs) {
+            Model model,
+            RedirectAttributes redirectAttrs) {
 
         Prestamo prestamo = prestamoService.obtenerPorId(id);
         if (prestamo == null) {
@@ -115,8 +116,8 @@ public class PrestamoViewController {
     // 🔹 Registrar un empeño para un préstamo
     @PostMapping("/{id}/empenos")
     public String registrarEmpeno(@PathVariable Long id,
-                                  @ModelAttribute("nuevoEmpeno") Empeno nuevoEmpeno,
-                                  RedirectAttributes redirectAttrs) {
+            @ModelAttribute("nuevoEmpeno") Empeno nuevoEmpeno,
+            RedirectAttributes redirectAttrs) {
 
         Prestamo prestamo = prestamoService.obtenerPorId(id);
         if (prestamo == null) {
@@ -138,8 +139,8 @@ public class PrestamoViewController {
     // 🔹 Registrar un documento para un préstamo
     @PostMapping("/{id}/documentos")
     public String registrarDocumento(@PathVariable Long id,
-                                     @ModelAttribute("nuevoDocumento") DocumentoPrestamo nuevoDocumento,
-                                     RedirectAttributes redirectAttrs) {
+            @ModelAttribute("nuevoDocumento") DocumentoPrestamo nuevoDocumento,
+            RedirectAttributes redirectAttrs) {
 
         Prestamo prestamo = prestamoService.obtenerPorId(id);
         if (prestamo == null) {

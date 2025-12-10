@@ -25,6 +25,10 @@ public class Prestamo {
     private LocalDate fechaLimite;
     private String estado;
 
+    // 💰 Campos para interés y total a pagar
+    private Double interesPorcentaje; // Porcentaje de interés (ej: 5, 10, 15, 20)
+    private Double totalPagar; // Monto total a pagar (capital + interés)
+
     // 🔗 NUEVO: relación con empeños
     @OneToMany(mappedBy = "prestamo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Empeno> empenos = new ArrayList<>();
@@ -33,34 +37,96 @@ public class Prestamo {
     @OneToMany(mappedBy = "prestamo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DocumentoPrestamo> documentos = new ArrayList<>();
 
-    public Prestamo() {}
+    public Prestamo() {
+    }
 
     // ===== getters y setters =====
 
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public long getId() {
+        return id;
+    }
 
-    public Persona getPersona() { return persona; }
-    public void setPersona(Persona persona) { this.persona = persona; }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public Objeto getObjeto() { return objeto; }
-    public void setObjeto(Objeto objeto) { this.objeto = objeto; }
+    public Persona getPersona() {
+        return persona;
+    }
 
-    public LocalDate getFechaPrestamo() { return fechaPrestamo; }
-    public void setFechaPrestamo(LocalDate fechaPrestamo) { this.fechaPrestamo = fechaPrestamo; }
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
 
-    public LocalDate getFechaDevolucion() { return fechaDevolucion; }
-    public void setFechaDevolucion(LocalDate fechaDevolucion) { this.fechaDevolucion = fechaDevolucion; }
+    public Objeto getObjeto() {
+        return objeto;
+    }
 
-    public LocalDate getFechaLimite() { return fechaLimite; }
-    public void setFechaLimite(LocalDate fechaLimite) { this.fechaLimite = fechaLimite; }
+    public void setObjeto(Objeto objeto) {
+        this.objeto = objeto;
+    }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public LocalDate getFechaPrestamo() {
+        return fechaPrestamo;
+    }
 
-    public List<Empeno> getEmpenos() { return empenos; }
-    public void setEmpenos(List<Empeno> empenos) { this.empenos = empenos; }
+    public void setFechaPrestamo(LocalDate fechaPrestamo) {
+        this.fechaPrestamo = fechaPrestamo;
+    }
 
-    public List<DocumentoPrestamo> getDocumentos() { return documentos; }
-    public void setDocumentos(List<DocumentoPrestamo> documentos) { this.documentos = documentos; }
+    public LocalDate getFechaDevolucion() {
+        return fechaDevolucion;
+    }
+
+    public void setFechaDevolucion(LocalDate fechaDevolucion) {
+        this.fechaDevolucion = fechaDevolucion;
+    }
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
+    }
+
+    public void setFechaLimite(LocalDate fechaLimite) {
+        this.fechaLimite = fechaLimite;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public List<Empeno> getEmpenos() {
+        return empenos;
+    }
+
+    public void setEmpenos(List<Empeno> empenos) {
+        this.empenos = empenos;
+    }
+
+    public List<DocumentoPrestamo> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<DocumentoPrestamo> documentos) {
+        this.documentos = documentos;
+    }
+
+    public Double getInteresPorcentaje() {
+        return interesPorcentaje;
+    }
+
+    public void setInteresPorcentaje(Double interesPorcentaje) {
+        this.interesPorcentaje = interesPorcentaje;
+    }
+
+    public Double getTotalPagar() {
+        return totalPagar;
+    }
+
+    public void setTotalPagar(Double totalPagar) {
+        this.totalPagar = totalPagar;
+    }
 }
